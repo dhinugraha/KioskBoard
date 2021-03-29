@@ -553,6 +553,17 @@
                 keyElm.addEventListener('click', function (e) {
                   e.preventDefault();
 
+                  // start patch for caret position, add value at current carret position
+                  var startPos = input.selectionStart;
+                  // prevent carret to the end of text if caret position = 0
+                  if(startPos === 0) {
+                    var theInputSelIndex = 0;
+                  } else {
+                    var theInputSelIndex = startPos;
+                    input.setSelectionRange(startPos, startPos);
+                  }
+                  // end patch for caret position
+
                   // input trigger change for selectionStart
                   input.dispatchEvent(changeEvent);
 
@@ -574,6 +585,10 @@
 
                   // update input value
                   input.value = theInputValArray.join('');
+
+                  // start patch for caret position, move carret position after type
+                  input.setSelectionRange(startPos+1, startPos+1);
+                  // end patch for caret position
 
                 }, false);
               }
@@ -607,6 +622,11 @@
             var backspaceKeyElm = window.document.getElementById(kioskBoardVirtualKeyboard.id).getElementsByClassName('kioskboard-key-backspace')[0];
             if (backspaceKeyElm) {
               backspaceKeyElm.addEventListener('click', function (e) {
+                // start patch for caret position for backspace
+                var startPos = input.selectionStart;
+                input.setSelectionRange(startPos, startPos);
+                // end patch for caret position
+
                 e.preventDefault();
 
                 // trigger for selectionStart
@@ -620,6 +640,10 @@
 
                 // update input value
                 input.value = theInputValArray.join('');
+
+                // start patch for caret position for backspace
+                input.setSelectionRange(startPos-1, startPos - 1);
+                // end patch for caret position for backspace
 
               }, false);
             }

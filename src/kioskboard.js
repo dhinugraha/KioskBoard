@@ -551,15 +551,14 @@
                 var keyElm = eachKeyElm[i];
                 keyElm.addEventListener('click', function (e) {
                   // start patch for caret position, add value at current carret position
-                  var startPos = b.selectionStart;
-
+                  var startPos = input.selectionStart;
                   // prevent carret to the end of text if caret position = 0
-									if(startPos === 0) {
-										 var theInputSelIndex = 0; 
-									} else { 
-										theInputSelIndex = startPos; 
-										input.setSelectionRange(startPos, startPos);
-									}
+                  if(startPos === 0) {
+                    var theInputSelIndex = 0;
+                  } else {
+                    var theInputSelIndex = startPos;
+                    input.setSelectionRange(startPos, startPos);
+                  }
                   // end patch for caret position
 
                   e.preventDefault();
@@ -587,8 +586,7 @@
                   input.value = theInputValArray.join('');
 
                   // start patch for caret position, move carret position after type
-                  b.setSelectionRange(startPos+1, startPos+1);
-									var endPos = b.selectionStart;
+                  input.setSelectionRange(startPos+1, startPos+1);
                   // end patch for caret position
 
                 }, false);
@@ -627,7 +625,7 @@
 
                 // start patch for caret position for backspace
                 var startPos = input.selectionStart;
-                b.setSelectionRange(startPos, startPos);
+                input.setSelectionRange(startPos, startPos);
                 // end patch for caret position
 
                 e.preventDefault();
@@ -645,7 +643,7 @@
                 input.value = theInputValArray.join('');
 
                 // start patch for caret position for backspace
-                b.setSelectionRange(startPos-1, startPos - 1);
+                input.setSelectionRange(startPos-1, startPos - 1);
                 // end patch for caret position for backspace
 
               }, false);
